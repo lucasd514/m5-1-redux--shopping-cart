@@ -153,16 +153,16 @@ Our state shape:
 */
 
 const FridgeContents = () => {
-  const fridgeItems = /* TODO */
+  const fridgeItems = useSelector((state) => {
+    return state.fridge; //THIS IS A FUNCTION
+  });
 
   return (
     <div>
       <h1>Your fridge contains:</h1>
 
-      {fridgeItems.map(item => (
-        <div key={item}>
-          {item}
-        </div>
+      {fridgeItems.map((item) => (
+        <div key={item}>{item}</div>
       ))}
     </div>
   );
@@ -197,13 +197,12 @@ const App = () => {
   // We're going to watch OUR favourite movie,
   // in our BOYFRIEND's favourite genre.
   // (Terror at Jarry Park)
-  const movie = /* TODO */
+  const movie = useSelector((state) => {
+    const bfGenre = state.boyfriendFavouriteGenre;
+    return state.myFavouriteMovies[bfGenre];
+  });
 
-  return (
-    <div>
-      Tonight, we'll watch: {movie}
-    </div>
-  );
+  return <div>Tonight, we'll watch: {movie}</div>;
 };
 ```
 
@@ -226,13 +225,16 @@ Our state shape:
 const UserProfile = () => {
   // `streetAddress` should be formatted as:
   // "129 W. 81st St, Apartment 5A"
-  const streetAddress = /* TODO */
+  const streetAddress = useSelector((state) => {
+    const { line1, line2 } = state.address;
+    if (line2) {
+      return `line1 line2`;
+    }
 
-  return (
-    <div>
-      You live at {streetAddress}.
-    </div>
-  );
+    return line1;
+  });
+
+  return <div>You live at {streetAddress}.</div>;
 };
 ```
 
@@ -266,14 +268,13 @@ Our state shape:
 */
 
 const OnlineUsers = () => {
-  const myStatus = /* TODO */
-  const onlineUsers = /* TODO */
+  const myStatus = useSelector((state) => state.myStatus);
 
-  return onlineUsers.map(user => (
-    <div key={user.name}>
-      {user.name}
-    </div>
-  ));
+  const onlineUsers = useSelector((state) => {
+    return state.users.filter((user) => user.online);
+  });
+
+  return onlineUsers.map((user) => <div key={user.name}>{user.name}</div>);
 };
 ```
 
@@ -334,7 +335,7 @@ const TodoList = () => {
       {todos.map(todo => (
         <li key={todo.id}>
           {todo.value}
-          <button onClick={() => dispatch(markTodoAsCompleted(todo.id))}>
+          <button onClick={() => dispatch({type: markTodoAsCompleted(todo.id)})}>
         </li>
       ))}
     </ul>
@@ -355,7 +356,7 @@ import { useDispatch } from "react-redux";
 import { pokeUser } from "../actions";
 
 const OnlineUsers = () => {
-  // TODO: Something missing here...
+  const dispatch = useDispatch();
 
   const onlineUsers = useSelector((state) => {
     return state.users.filter((user) => user.online);
@@ -363,7 +364,9 @@ const OnlineUsers = () => {
 
   return onlineUsers.map((user) => (
     <div key={user.name}>
-      <button onClick={/* TODO */}>Message {user.name}</button>
+      <button onClick={() => dispatch(pokeUser(user.name))}>
+        Message {user.name}
+      </button>
     </div>
   ));
 };
@@ -382,11 +385,11 @@ const FridgeForm = () => {
   return (
     <form
       onSubmit={() => {
-        /* TODO */
+        dispatch(addItemToFridge(value));
       }}
     >
+      }} >
       <input type="text" onChange={(ev) => setValue(ev.target.value)} />
-
       <button type="submit">Submit</button>
     </form>
   );
