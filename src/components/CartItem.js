@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
-const CartItem = () => {
+const CartItem = (props) => {
+  console.log("this cart item", props.item.id);
+
   return (
     <Wrapper>
       <Details>
-        <Name>DDR</Name>
-        <Price>16</Price>
-        <ObjInfo>ER MEJO</ObjInfo>
+        <Name>{props.item.title}</Name>
+        <Price>{props.item.price}</Price>
+        <ObjInfo>{props.item.id} stickers, one pack</ObjInfo>
       </Details>
     </Wrapper>
   );
