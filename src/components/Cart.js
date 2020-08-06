@@ -16,7 +16,7 @@ const Cart = () => {
       {purchaseItems.map(
         (item) => (
           console.log("this is id", item.id),
-          (<CartItem key={item.id} item={item} />)
+          (<CartItem key={item.id} item={item} id={item.id} />)
         )
       )}
       <CheckOutDeetz>

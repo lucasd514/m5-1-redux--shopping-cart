@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { Icon } from 'react-icons-kit';
-import { x } from 'react-icons-kit/feather/x';
+import React from "react";
+import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+// import { Icon } from 'react-icons-kit';
+// import { x } from 'react-icons-kit/feather/x';
 
-import { updateQuantity, removeItem } from '../actions';
+import { updateQuantity, removeItem } from "../actions";
 
-import UnstyledButton from './UnstyledButton';
+import UnstyledButton from "./UnstyledButton";
 
 const CartItem = ({ item }) => {
   const itemQuantity = useSelector((state) => state.items[item.id].quantity);
@@ -17,11 +17,11 @@ const CartItem = ({ item }) => {
       <Header>
         {item.title}
         <CloseBtn onClick={() => dispatch(removeItem(item.id))}>
-          <Icon icon={x} />
+          {/* <Icon icon={x} /> */}
         </CloseBtn>
       </Header>
       <Body>
-        Quantity:{' '}
+        Quantity:{" "}
         <TextInput
           value={itemQuantity}
           onChange={(ev) => dispatch(updateQuantity(item.id, ev.target.value))}
