@@ -14,7 +14,7 @@ const CartItem = ({ item, id }) => {
   return (
     <Wrapper>
       <Details>
-        <button onClick={() => dispatch(removeItem(item.id))}>
+        <button onClick={() => dispatch(removeItem({ id }))}>
           <Icon icon={x} />
         </button>
         <Name>{item.title}</Name>

@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const initialState = {};
 
 export default function cartReducer(state = initialState, action) {
-  const newBag = { ...state };
+  const NewCopy = { ...state };
   switch (action.type) {
     case "ADD_ITEM": {
       return {
@@ -19,10 +19,10 @@ export default function cartReducer(state = initialState, action) {
       };
     }
     case "REMOVE_ITEM": {
-      console.log("................,", newBag);
-      delete newBag[action.item.Id];
-
-      return { ...newBag };
+      delete NewCopy[action.item.id];
+      return {
+        ...NewCopy,
+      };
     }
     default:
       return state;
